@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qual é o seu money type?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg1:#030d06;--bg2:#061a0e;--accent:#00c97a;--accent2:#f5c518;
+  --glass:rgba(255,255,255,0.05);--border:rgba(255,255,255,0.09);
+  --text:#e8fff3;--muted:rgba(232,255,243,0.5)
+}
+body{
+  font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--bg1) 0%,var(--bg2) 50%,#040f08 100%);
+  min-height:100vh;color:var(--text);display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:24px 16px;overflow-x:hidden;position:relative
+}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;animation:drift 9s ease-in-out infinite}
+.orb1{width:320px;height:320px;background:rgba(0,201,122,0.14);top:-100px;left:-100px}
+.orb2{width:260px;height:260px;background:rgba(245,197,24,0.10);bottom:-80px;right:-80px;animation-delay:-4.5s}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(18px,28px)}}
+
+main{position:relative;z-index:1;width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;gap:24px}
+
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--border);border-radius:100px;padding:6px 14px;font-size:12px;color:var(--accent);font-weight:500;letter-spacing:.5px;text-transform:uppercase;backdrop-filter:blur(12px);animation:fadeDown .6s ease}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+
+h1{font-size:clamp(24px,6vw,36px);font-weight:700;text-align:center;line-height:1.2;letter-spacing:-.5px;background:linear-gradient(135deg,#e8fff3 0%,var(--accent) 55%,var(--accent2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp .7s ease .1s both}
+.subtitle{font-size:15px;color:var(--muted);text-align:center;line-height:1.6;max-width:380px;animation:fadeUp .7s ease .2s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* loss indicator */
+.loss-card{width:100%;background:rgba(245,197,24,0.07);border:1px solid rgba(245,197,24,0.2);border-radius:16px;padding:18px 20px;animation:fadeUp .7s ease .25s both}
+.loss-label{font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.loss-amount{font-size:32px;font-weight:700;color:var(--accent2)}
+.loss-sub{font-size:12px;color:rgba(245,197,24,.6);margin-top:4px}
+.loss-bar{height:4px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;margin-top:12px}
+.loss-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent2),#ff6b35);border-radius:100px;animation:loss-grow 2s ease 1s forwards}
+@keyframes loss-grow{to{width:72%}}
+
+/* graph lines decorative */
+.graph{width:100%;height:60px;animation:fadeUp .7s ease .3s both}
+.graph svg{width:100%;height:100%}
+
+.card{width:100%;background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:24px;backdrop-filter:blur(16px);animation:fadeUp .7s ease .35s both}
+.checks{display:flex;flex-direction:column;gap:12px}
+.check-item{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(232,255,243,.8)}
+.check-icon{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px}
+
+.cta-btn{width:100%;padding:17px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);color:#000;font-size:16px;font-weight:700;cursor:pointer;animation:fadeUp .7s ease .4s both, pulse 2.4s ease-in-out 1.2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,201,122,.4)}70%{box-shadow:0 0 0 14px rgba(0,201,122,0)}}
+
+.progress-bar{width:100%;background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:14px 16px;backdrop-filter:blur(12px);animation:fadeUp .7s ease .5s both}
+.prog-label{font-size:12px;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between}
+.bar-track{height:6px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden}
+.bar-fill{height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));animation:fill-bar 1.8s ease .8s forwards}
+@keyframes fill-bar{to{width:87%}}
+
+.counter{font-size:13px;color:var(--muted);text-align:center;animation:fadeUp .7s ease .6s both}
+.counter span{color:var(--accent);font-weight:600}
+
+.unlock{width:100%;background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:28px 24px;backdrop-filter:blur(16px);text-align:center;animation:fadeUp .7s ease .7s both}
+.unlock h2{font-size:20px;font-weight:700;margin-bottom:8px}
+.unlock p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.unlock-btn{display:block;width:100%;padding:15px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000;font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer}
+
+footer{font-size:11px;color:rgba(255,255,255,.2);text-align:center;animation:fadeUp .7s ease .8s both}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<main>
+  <div class="badge">💰 perfil financeiro</div>
+
+  <h1>Seu problema financeiro talvez não seja falta de dinheiro.</h1>
+
+  <p class="subtitle">Na maioria dos casos é psicológico — e você provavelmente nunca percebeu.</p>
+
+  <div class="loss-card">
+    <div class="loss-label">Perda invisível estimada por ano</div>
+    <div class="loss-amount" id="counter-amount">R$ 0</div>
+    <div class="loss-sub">baseado nos perfis mais comuns</div>
+    <div class="loss-bar"><div class="loss-fill"></div></div>
+  </div>
+
+  <div class="graph">
+    <svg viewBox="0 0 400 60" preserveAspectRatio="none">
+      <polyline points="0,55 40,45 80,50 120,30 160,38 200,20 240,28 280,12 320,18 360,8 400,5"
+        fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#00c97a"/>
+          <stop offset="100%" stop-color="#f5c518"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="card">
+    <div class="checks">
+      <div class="check-item"><div class="check-icon">✓</div>Descubra qual emoção faz você gastar mais</div>
+      <div class="check-item"><div class="check-icon">✓</div>Identifique a crença que sabota sua riqueza</div>
+      <div class="check-item"><div class="check-icon">✓</div>Resultado baseado em finanças comportamentais</div>
+      <div class="check-item"><div class="check-icon">✓</div>Mais de 50 mil participantes</div>
+    </div>
+  </div>
+
+  <button class="cta-btn">Descobrir meu money type →</button>
+
+  <div class="progress-bar">
+    <div class="prog-label">
+      <span>87% mudam seus hábitos após o resultado</span>
+      <span id="pct">0%</span>
+    </div>
+    <div class="bar-track"><div class="bar-fill"></div></div>
+  </div>
+
+  <p class="counter"><span id="live-count">18</span> pessoas descobriram seu perfil nos últimos 5 minutos</p>
+
+  <div class="unlock">
+    <h2>💰 Descubra como seu cérebro lida com dinheiro</h2>
+    <p>Qual crença inconsciente está sabotando sua riqueza e quanto dinheiro você pode perder se continuar esse padrão.</p>
+    <a href="[INSERIR LINK DE PAGAMENTO AQUI]" class="unlock-btn">Quero meu perfil financeiro →</a>
+  </div>
+
+  <footer>A maioria das pessoas nunca descobre o verdadeiro motivo pelo qual não prospera.</footer>
+</main>
+
+<script>
+let target=8400,curr=0;
+const amt=document.getElementById('counter-amount');
+const t=setInterval(()=>{curr+=Math.floor(Math.random()*180+80);if(curr>=target){curr=target;clearInterval(t)}amt.textContent='R$ '+curr.toLocaleString('pt-BR')},40);
+
+let n=0;const pct=document.getElementById('pct');
+setTimeout(()=>{const t2=setInterval(()=>{n++;pct.textContent=n+'%';if(n>=87)clearInterval(t2)},18)},800);
+
+const el=document.getElementById('live-count');
+setInterval(()=>{el.textContent=Math.max(8,parseInt(el.textContent)+(Math.random()>.5?1:-1))},4000);
+</script>
+</body>
+</html>
